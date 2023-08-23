@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('workflow_property_values', function (Blueprint $table) {
+        Schema::create('property_category_defaults', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('workflow_property_id');
-            $table->string('value');
+            $table->unsignedBigInteger('property_category_id');
+            $table->json('params');
+            $table->tinyInteger('status');
             $table->timestamps();
 
-            $table->foreign('workflow_property_id')->references('id')->on('workflow_properties')->onDelete('cascade');
+            $table->foreign('property_category_id')->references('id')->on('properties_category')->onDelete('cascade');
 
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('property_workflow_values');
+        Schema::dropIfExists('property_category_defaults');
     }
 };

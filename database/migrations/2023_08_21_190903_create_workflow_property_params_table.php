@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('properties_custom_params', function (Blueprint $table) {
+        Schema::create('workflow_property_params', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('workflow_property_id');
             $table->string('placeholder');
-            $table->string('params');
+            $table->json('params');
             $table->timestamps();
+
+            $table->foreign('workflow_property_id')->references('id')->on('workflow_properties')->onDelete('cascade');
+
         });
     }
 
@@ -28,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('properties_custom_params');
+        Schema::dropIfExists('workflow_property_params');
     }
 };
